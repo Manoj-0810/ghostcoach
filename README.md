@@ -1,345 +1,649 @@
-# 👻 Ghost Coach — AI Sports Coaching Assistant
+<div align="center">
 
-An AI-powered sports coaching platform that analyzes athlete stance photos using Google Gemini Vision AI, delivers structured technique feedback calibrated to the player's profile, and provides an interactive follow-up coaching chat — all through a polished full-stack application.
+# 👻 Ghost Coach
+
+### AI-Powered Sports Coaching Platform
+
+*Analyze athlete stance photos with Gemini Vision AI. Get structured, profile-calibrated technique feedback. Chat with your AI coach for follow-up guidance.*
+
+<br />
+
+<p>
+  <img src="https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 17" />
+  <img src="https://img.shields.io/badge/Spring_Boot-3.2.5-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot 3.2.5" />
+  <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 18" />
+  <img src="https://img.shields.io/badge/PostgreSQL-15-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL 15" />
+  <img src="https://img.shields.io/badge/Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Compose" />
+  <img src="https://img.shields.io/badge/Gemini_2.5_Flash-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Gemini 2.5 Flash" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Flyway-CC0200?style=for-the-badge&logo=flyway&logoColor=white" alt="Flyway" />
+  <img src="https://img.shields.io/badge/Swagger_UI-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" alt="Swagger" />
+  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT" />
+</p>
+
+<br />
+
+<a href="https://www.loom.com/share/c51e1b8bd724439082667e03e258428d">
+  <img src="https://cdn.loom.com/sessions/thumbnails/c51e1b8bd724439082667e03e258428d-05dc14ac9f1b8027-full-play.gif" alt="Ghost Coach — Live Platform Demo" width="720" />
+</a>
+
+<p><strong>▶ Watch the full 5-minute platform walkthrough on Loom</strong></p>
+
+<br />
+
+</div>
 
 ---
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 17" />
-  <img src="https://img.shields.io/badge/Spring_Boot-3.2.5-green?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot 3.2.5" />
-  <img src="https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react&logoColor=white" alt="React 18" />
-  <img src="https://img.shields.io/badge/PostgreSQL-15-blue?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL 15" />
-  <img src="https://img.shields.io/badge/Docker_Compose-Supported-blue?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Compose" />
-  <img src="https://img.shields.io/badge/Google_Gemini-2.5_Flash-green?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Google Gemini" />
-</p>
+## Table of Contents
+
+- [Live Demo Video](#-live-demo-video)
+- [Quick Start](#-quick-start-under-5-minutes)
+- [System Architecture](#-system-architecture)
+- [Feature Set](#-complete-feature-set)
+- [AI Prompt Engineering](#-ai-prompt-engineering--parsing-architecture)
+- [Engineering Decisions](#-engineering--architecture-decisions)
+- [Security Architecture](#-security-architecture)
+- [API Reference](#-api-endpoint-reference)
+- [Database Design](#-database-design)
+- [UI/UX Design](#-uiux--dynamic-empty-states)
+- [Known Limitations & Mitigations](#-known-limitations--professional-mitigations)
+- [Future Roadmap](#-future-product-roadmap)
+- [Code Quality Signals](#-evaluation--code-quality-signals)
+- [Bonus Features](#-bonus-features-implemented--honest-boundaries)
+- [Project Structure](#-project-directory-layout)
+- [Retrospective](#-what-i-would-do-differently-given-more-time)
+
+---
+
+## 🎬 Live Demo Video
+
+<div align="center">
+
+<a href="https://www.loom.com/share/c51e1b8bd724439082667e03e258428d">
+  <img src="https://cdn.loom.com/sessions/thumbnails/c51e1b8bd724439082667e03e258428d-05dc14ac9f1b8027.jpg" alt="Ghost Coach Demo" width="680" />
+</a>
+
+**[▶ Click to watch the full walkthrough (4:43)](https://www.loom.com/share/c51e1b8bd724439082667e03e258428d)**
+
+</div>
+
+**What the video covers:**
+
+| Timestamp | Topic | What You'll See |
+|:---|:---|:---|
+| `0:00` | **Platform & Stack Overview** | Docker Compose orchestration, 3 healthy containers, system health verification |
+| `2:00` | **Stance Photo Analysis** | Upload flow, Apache Tika magic-byte validation, Gemini 2.5 Flash Vision API call |
+| `4:20` | **AI Feedback & Body Legend** | Score card rendering, strength/weakness breakdown, anatomical annotation panel |
+| `5:53` | **Chat & Progress Tracking** | Context-injected coaching chat, Recharts gradient analytics, Swagger UI |
 
 ---
 
 ## 🚀 Quick Start (Under 5 Minutes)
 
-Deploy the entire full-stack application locally with a single command. 
+Deploy the entire full-stack application locally with a single command.
 
-### 1. Prerequisites
-- **Docker Desktop** (v20+) with **WSL2** enabled
-- **Google AI Studio API Key** — Get a free key instantly at [aistudio.google.com](https://aistudio.google.com/apikey)
+### Prerequisites
 
-### 2. Run Locally
+| Tool | Version | Purpose |
+|:---|:---|:---|
+| **Docker Desktop** | v20+ | Container orchestration with WSL2 |
+| **Google AI Studio API Key** | — | Free at [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
+
+### Launch
 
 ```bash
-# 1. Create your environment file from the template
-cp .env.example .env
+# 1. Clone and enter the project
+git clone https://github.com/your-username/ghostcoach.git
+cd ghostcoach
 
-# 2. Add your Google Gemini API Key inside .env
+# 2. Configure environment
+cp .env.example .env
 # Open .env and set: GEMINI_API_KEY=AIzaSy...
 
-# 3. Spin up all containers in detached mode
+# 3. Build and launch all services
 docker-compose up -d --build
 ```
 
-### 3. Verify System Health
-
-> [!TIP]
-> Use these quick shell commands to verify that all databases, migrations, and backend systems have booted successfully:
+### Verify Health
 
 ```bash
-# Verify all containers are running and healthy
+# All 3 containers should show "Up" and "healthy"
 docker ps
 
-# Check the API startup logs
-docker logs ghostcoach-api
+# Confirm Spring Boot + Flyway migrations completed
+docker logs ghostcoach-api --tail 20
 ```
 
-### 4. Service Portal Mapping
+> [!TIP]
+> The backend waits for PostgreSQL to pass its health check before booting. Flyway migrations (`V1`, `V2`, `V3`) run automatically on first launch.
 
-| Service | Local URL | Access Details |
-| :--- | :--- | :--- |
-| **Frontend Web App** | [http://localhost:3000](http://localhost:3000) | Fully responsive Dashboard & Coaching UI |
-| **Backend API Server** | [http://localhost:8080](http://localhost:8080) | REST Gateway & JSON response endpoints |
-| **Interactive API Documentation** | [http://localhost:8080/docs](http://localhost:8080/docs) | Complete Swagger UI with token testing support |
-| **PostgreSQL Database** | `localhost:5432` | Username: `ghostcoach` \| Database: `ghostcoach` |
+### Service Map
+
+| Service | URL | Details |
+|:---|:---|:---|
+| 🖥️ **Frontend** | [http://localhost:3000](http://localhost:3000) | React SPA — responsive Dashboard & Coaching UI |
+| ⚙️ **Backend API** | [http://localhost:8080](http://localhost:8080) | Spring Boot REST gateway |
+| 📖 **Swagger Docs** | [http://localhost:8080/docs](http://localhost:8080/docs) | Interactive OpenAPI 3.0 with JWT auth support |
+| 🗄️ **PostgreSQL** | `localhost:5432` | User: `ghostcoach` · DB: `ghostcoach` |
 
 ---
 
 ## 🏗️ System Architecture
 
-Ghost Coach is built on a highly decoupled, service-oriented architecture designed to handle visual analyses and contextual chat streams:
+Ghost Coach is built on a decoupled, service-oriented architecture designed for visual analysis pipelines and contextual chat streams.
+
+### High-Level Topology
 
 ```mermaid
 graph TD
-    %% Styling
-    classDef client fill:#3b82f6,stroke:#1d4ed8,stroke-width:2px,color:#fff;
-    classDef server fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff;
-    classDef database fill:#6366f1,stroke:#4338ca,stroke-width:2px,color:#fff;
-    classDef external fill:#ef4444,stroke:#b91c1c,stroke-width:2px,color:#fff;
+    classDef client fill:#3b82f6,stroke:#1d4ed8,stroke-width:2px,color:#fff
+    classDef server fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff
+    classDef database fill:#6366f1,stroke:#4338ca,stroke-width:2px,color:#fff
+    classDef external fill:#ef4444,stroke:#b91c1c,stroke-width:2px,color:#fff
 
-    %% Nodes
-    A[React SPA Client <br> Port 3000 / Vite + Nginx]:::client
-    B[Spring Boot Gateway <br> Port 8080 / Tomcat]:::server
-    C[(PostgreSQL DB <br> Port 5432 / pgdata)]:::database
-    D[Google AI Studio <br> Gemini 2.5 Flash API]:::external
+    A["React SPA Client<br/>Port 3000 · Vite + Nginx"]:::client
+    B["Spring Boot Gateway<br/>Port 8080 · Tomcat"]:::server
+    C[("PostgreSQL 15<br/>Port 5432 · JSONB + Flyway")]:::database
+    D["Google AI Studio<br/>Gemini 2.5 Flash API"]:::external
 
-    %% Relations
-    A <-->|HTTP REST API + JWT Authorization| B
-    B <-->|JDBC Driver + Flyway| C
-    B <-->|Non-blocking WebClient| D
+    A <-->|"REST API · JWT Auth"| B
+    B <-->|"JDBC · Flyway"| C
+    B <-->|"Non-blocking WebClient"| D
+```
+
+### Request Flow — Stance Analysis Pipeline
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Athlete as Athlete / Browser
+    participant FE as React Frontend
+    participant API as Spring Boot API
+    participant Tika as Apache Tika
+    participant Gem as Gemini 2.5 Flash
+    participant DB as PostgreSQL
+
+    Athlete->>FE: Select & upload stance photo
+    FE->>API: POST /api/sessions/upload (multipart + JWT)
+    API->>Tika: Validate magic bytes (not just extension)
+    Tika-->>API: ✅ Confirmed genuine image/jpeg
+    API->>API: Fetch user profile (sport, position, level, age)
+    Note over API: Build profile-calibrated system prompt
+    API->>Gem: Send base64 image + system prompt via WebClient
+    Gem-->>API: Return structured JSON (score, strengths, fixes)
+    API->>API: Strip markdown fences · Deserialize JSON
+    API->>DB: Persist session with JSONB columns
+    API-->>FE: 201 Created + FeedbackResponse DTO
+    FE-->>Athlete: Render score card, body legend, drill suggestion
 ```
 
 ---
 
-## 🎯 Functional Feature Set (Playmotech Rubric Core)
+## 🎯 Complete Feature Set
 
-The application implements all **5 core functional requirements** outlined in the submission rubrics:
+All **5 core functional requirements** are fully implemented, plus 3 bonus features.
 
-### 1. Unified Authentication Suite
-* **Athlete Registration**: Captures key athletic attributes (Full Name, Age, Sport, Target Position, and Experience Level). Sport and experience levels are strongly validated using database-backed check constraints.
-* **Secure Session Logging**: Employs industry-standard BCrypt hashing (strength factor 12) for credentials and issues stateless, cryptographically signed JSON Web Tokens (JWT) for secure client authorization.
+### Feature 1 — Unified Authentication Suite
 
-### 2. Intelligent Stance Technique Review
-* **File Header magic-byte inspection**: Validates raw image uploads against executable masquerades.
-* **Multimodal Vision Analysis**: Transmits stance images to Gemini 2.5 Flash alongside dynamically constructed, profile-calibrated prompts. Returns score metrics, prioritized training goals, and specialized annotations.
+| Capability | Implementation |
+|:---|:---|
+| **Athlete Registration** | Captures Full Name, Email, Age, Sport, Position, Experience Level |
+| **Input Validation** | JSR-380 `@NotBlank`, `@Email`, `@Min(13)`, `@Max(60)` on controller DTOs |
+| **Password Security** | BCrypt with strength factor 12 — salted, hashed, constant-time comparison |
+| **Session Management** | Stateless JWT via `jjwt` 0.12.5 — HS512 signed, 24h expiry |
+| **Sport Validation** | Database-backed `CHECK` constraints (Cricket, Football, Basketball, Badminton) |
 
-### 3. Comprehensive Session Log & Pagination
-* **Performance Logs**: Delivers a paginated dashboard history. Retrieves records using optimized backend indexes.
-* **Full-Report Cards**: Allows athletes to drill down into any historical analysis to view body annotations, structural feedback, and contextual conversation histories.
+### Feature 2 — Intelligent Stance Technique Review
 
-### 4. Direct Coach follow-up Chat
-* **Context-Injected Discussions**: Provides a conversation interface where athletes can ask follow-up questions.
-* **Session-Scoped AI Coach**: The backend retrieves the original performance metrics (score, strengths, priority drills) and injects them as conversation context, allowing the coach to answer with sport-specific guidance.
+| Capability | Implementation |
+|:---|:---|
+| **Magic-Byte Validation** | Apache Tika inspects raw file stream headers — blocks renamed executables |
+| **File Size Enforcement** | Hard 5MB cap via Spring multipart config + controller validation |
+| **Multimodal Vision AI** | Image bytes + dynamically calibrated prompt → Gemini 2.5 Flash |
+| **Structured Feedback** | Returns: `overallScore`, `strengths[]`, `areasToImprove[]`, `priorityFix`, `drillSuggestion`, `confidenceLevel`, `bodyAnnotations[]` |
+| **Experience Calibration** | Prompt adapts tone, jargon level, and specificity for BEGINNER / INTERMEDIATE / ADVANCED |
 
-### 5. Side-by-Side Session Comparison (Feature 5 — Fully Implemented)
-* **Functional Review**: Enables athletes to select any two technique sessions (e.g. an initial assessment and a subsequent review after a training plan) and review them side-by-side in a comparative interface.
-* **Visual Delta Metrics**: Displays dynamic score comparison indicators, highlighting technique improvements or regressions (e.g., score delta calculations + visual trend arrows).
-* **Double-Ownership Verification**: The backend `/api/sessions/compare?id1=...&id2=...` endpoint validates that *both* target session IDs exist and are securely owned by the calling user, completely neutralizing Insecure Direct Object Reference (IDOR) threats during multi-resource queries.
+### Feature 3 — Paginated Session History
 
----
+| Capability | Implementation |
+|:---|:---|
+| **Dashboard Cards** | Thumbnail, score badge, sport tag, upload timestamp, priority fix preview |
+| **Pagination** | Backend `Pageable` with configurable page size (max 50) to prevent memory exhaustion |
+| **Detail Drill-Down** | Expand any session → full body annotations, strengths, improvement cards, chat history |
+| **Query Optimization** | `JOIN FETCH` in all repository queries — zero N+1 database round-trips |
 
-## ⚡ Engineering & Architecture Decisions
+### Feature 4 — Context-Aware AI Coaching Chat
 
-Every architectural token, dependency, and pattern was chosen to solve specific product, security, and scalability issues.
+| Capability | Implementation |
+|:---|:---|
+| **Session-Scoped Context** | Injects original score, priority fix, drill suggestion, and areas to improve into every chat prompt |
+| **Multi-Turn History** | Full conversation history mapped to Gemini's `user`/`model` turn format |
+| **Profile Awareness** | Sport, position, experience level, and age injected as system instructions |
+| **Smart Formatting** | Double-newline instruction enables clean paragraph splitting in React UI |
 
-### 1. Spring Boot 3.2.5 & Java 17
-* **Robust Security Filters**: Built-in security architecture allows us to establish modular, stateless security filters (`JwtAuthFilter`) directly in the HTTP request pipeline.
-* **Declarative Bean Validation**: Utilizing `jakarta.validation` (JSR-380) allows us to validate incoming REST DTOs (`@NotBlank`, `@Email`, `@Min`, `@Max`) at the controller boundary, returning clean, automated validation envelopes before execution hits service classes.
+### Feature 5 — Side-by-Side Session Comparison
 
-### 2. PostgreSQL 15 & Hybrid Schema with JSONB
-* **The Challenge**: Technique feedback structured data (strengths arrays, body annotations, and dynamic corrective matrices) is highly mutable. Standard normalization would require 5+ separate tables and complex multi-join queries.
-* **The Solution**: A hybrid database approach. We store structured user records and sessions with strict schemas, but map AI-returned feedback arrays and body part annotations using PostgreSQL **JSONB** columns.
-* **Why JSONB?**: Unlike regular JSON text, JSONB compiles data into a decomposed binary format, allowing fast indexing, low storage overhead, and deep nesting. We use `io.hypersistence:hypersistence-utils-hibernate-62` to automatically serialize and deserialize these fields directly into Java `List` and `Map` collections.
-
-### 3. Flyway Migration Strategy
-* **Zero auto-ddl**: Spring Boot's Hibernate `ddl-auto: update` is extremely dangerous in production because it can drop data or silently fail on schema mismatches.
-* **repeatable migrations**: We enforce version-controlled, incremental SQL migration scripts (`db/migration/V1__...`, `V2__...`, `V3__...`) to baseline the DB structure. This guarantees that local, staging, and production environments align perfectly.
-
-### 4. Stateful Magic Byte Verification (Apache Tika)
-* **The Security Threat**: A standard file validator checks only the file extension (e.g. renaming `malicious.exe` to `photo.jpg`). If an attacker uploads a script that gets stored or read, it can compromise the filesystem.
-* **The Solution**: We integrated **Apache Tika**. When an image is received at the `/upload` endpoint, Tika reads the actual file stream, inspecting the file's header and magic bytes to confirm it is a genuine image type (`image/jpeg`, `image/png`, `image/webp`, `image/gif`) before saving it.
-
-### 5. WebClient vs RestTemplate
-* Spring Boot's classic `RestTemplate` operates on a blocking, one-thread-per-request model, which creates huge resource overhead during slow AI analysis requests. We utilize **WebClient** (WebFlux), which leverages Netty underneath to handle asynchronous HTTP connections, keeping server threads free.
-
-### 6. Swagger UI & OpenAPI 3 integration
-* We integrated `springdoc-openapi-starter-webmvc-ui` to auto-generate documentation. We customized it with a custom `OpenApiConfig` class to support JWT Bearer Authorization. The Playmotech team can authenticate with their JWT token directly inside Swagger UI and run API tests instantly.
+| Capability | Implementation |
+|:---|:---|
+| **Comparative UI** | Two sessions rendered adjacent — score, strengths, improvements, body annotations |
+| **Visual Delta Metrics** | Score delta calculation with trend arrows (↑ / ↓) and color-coded indicators |
+| **IDOR Protection** | Backend validates both session IDs belong to the authenticated user before returning data |
+| **API Endpoint** | `GET /api/sessions/compare?id1=...&id2=...` with double-ownership verification |
 
 ---
 
 ## 🤖 AI Prompt Engineering & Parsing Architecture
 
-The core value of Ghost Coach lies in how the vision model is prompt-instructed, safety-checked, and parsed into valid application states.
+The core value of Ghost Coach lies in how the vision model is instructed, validated, and parsed into type-safe application state.
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor User as Athlete / UI
-    participant API as Spring Boot API
-    participant Gem as Gemini 2.5 Flash
-    participant DB as PostgreSQL
+### Stance Analysis Prompt
 
-    User->>API: Upload Stance Image + JWT
-    API->>API: Secure Magic Byte Validation (Apache Tika)
-    API->>API: Fetch User Profile (Sport, Position, Level, Age)
-    Note over API: Dynamically build profile-calibrated system prompt
-    API->>Gem: Send Image Bytes + System Prompt via WebClient
-    Gem-->>API: Return Structured Response (JSON inside Markdown)
-    API->>API: Sanitize Code Fences & Deserialize JSON
-    API->>DB: Save Session (Postgres JSONB)
-    API-->>User: Return 201 Created (Polished Coaching Feedback UI)
-```
-
-### 1. Stance Analysis System Prompt
-Instead of sending a generic "coach this image" query, the `GeminiService` dynamically builds a prompt calibrated to the user's specific experience level and demographics:
+The `GeminiService` dynamically builds a profile-calibrated system prompt for each upload:
 
 ```
-You are an elite {SPORT} coach with 20 years of professional experience specializing in technique analysis at youth and semi-professional level.
+You are an elite {SPORT} coach with 20 years of professional experience
+specializing in technique analysis at youth and semi-professional level.
 
-You are reviewing a stance photo submitted by a {LEVEL}-level {POSITION} in {SPORT}, aged {AGE}. Calibrate every piece of feedback precisely to this profile:
-- BEGINNER: foundational corrections, encouraging tone, avoid jargon
-- INTERMEDIATE: technical specificity, reference named techniques
-- ADVANCED: precision corrections, competitive-level detail
+You are reviewing a stance photo submitted by a {LEVEL}-level {POSITION}
+in {SPORT}, aged {AGE}. Calibrate every piece of feedback precisely:
+  - BEGINNER: foundational corrections, encouraging tone, avoid jargon
+  - INTERMEDIATE: technical specificity, reference named techniques
+  - ADVANCED: precision corrections, competitive-level detail
 
-Analyze the player's technique in this image and respond ONLY with a valid JSON object. No markdown. No preamble. No code blocks. Only the raw JSON object below:
-
+Respond ONLY with a valid JSON object matching this exact schema:
 {
   "overallScore": <integer 1-10>,
   "strengths": ["<observation>", "<observation>"],
   "areasToImprove": [
-    {"issue": "<short label>", "explanation": "<plain English, 1-2 sentences>"},
-    {"issue": "<short label>", "explanation": "<plain English, 1-2 sentences>"}
+    {"issue": "<label>", "explanation": "<1-2 sentences>"}
   ],
-  "priorityFix": "<single most critical correction as a direct instruction>",
-  "drillSuggestion": "<named drill + 1 sentence on how to perform it>",
+  "priorityFix": "<single most critical correction>",
+  "drillSuggestion": "<named drill + how to perform it>",
   "confidenceLevel": "<LOW|MEDIUM|HIGH>",
   "bodyAnnotations": [
-    {"label": "<body part>", "description": "<what to fix>", "importance": "<HIGH|MEDIUM|LOW>"},
-    {"label": "<body part>", "description": "<what to fix>", "importance": "<HIGH|MEDIUM|LOW>"}
+    {"label": "<body part>", "description": "<fix>", "importance": "<HIGH|MEDIUM|LOW>"}
   ]
 }
-
-If you cannot clearly identify a stance, set confidenceLevel to LOW and explain the limitation in areasToImprove. Do not guess at sport-specific details you cannot see in the image.
 ```
 
-### 2. Follow-Up Chat Prompt (Full System Template)
-To maintain strict, context-aware athletic coaching during follow-up conversations without letting the LLM hallucinate or lose focus, the `GeminiService` constructs this **comprehensive system instruction prompt** prior to generating the multi-turn chat request:
+### Follow-Up Chat Prompt
+
+Every coaching chat is context-injected with the original session analysis:
 
 ```
-You are Ghost Coach — an expert {SPORT} coaching assistant having a follow-up conversation with a {LEVEL} {POSITION}, aged {AGE}.
+You are Ghost Coach — an expert {SPORT} coaching assistant having a
+follow-up conversation with a {LEVEL} {POSITION}, aged {AGE}.
 
 Their last session analysis:
-- Overall Score: {SCORE}/10
-- Priority Fix: {PRIORITY_FIX}
-- Drill Suggested: {DRILL_SUGGESTION}
-- Areas to Improve:
-{AREAS_TO_IMPROVE_LIST}
+  - Overall Score: {SCORE}/10
+  - Priority Fix: {PRIORITY_FIX}
+  - Drill Suggested: {DRILL_SUGGESTION}
+  - Areas to Improve:
+    {AREAS_TO_IMPROVE_LIST}
 
-Answer as a knowledgeable, direct coach. Keep responses under 150 words. Be specific to {SPORT} and their experience level. No generic advice.
-Always use double-newlines before numbered steps, bullet points, or distinct coaching cues so the text is spaced out beautifully and highly comfortable to read in a messaging bubble.
+Answer as a knowledgeable, direct coach. Keep responses under 150 words.
+Be specific to {SPORT} and their experience level. No generic advice.
+```
+
+### Response Parsing Pipeline
+
+```
+Gemini Raw Output ──▶ Strip ```json fences (regex) ──▶ Jackson ObjectMapper ──▶ FeedbackResponse DTO
+                                                                                    │
+                                                                  Validated fields: overallScore ∈ [1,10]
+                                                                                    confidenceLevel ∈ {LOW,MEDIUM,HIGH}
+                                                                                    bodyAnnotations[].importance validated
 ```
 
 > [!NOTE]
-> Instructing the model to utilize explicit double-newlines enables our custom React front-end text engine to dynamically parse steps and inline styling (such as bolding and list indents) perfectly.
+> The response parser (`GeminiResponseParser.java`) gracefully handles cases where Gemini wraps output in markdown code fences, despite explicit prompt instructions not to. This defensive parsing prevents deserialization failures in production.
+
+---
+
+## ⚡ Engineering & Architecture Decisions
+
+Every dependency and pattern was chosen to solve a specific technical challenge.
+
+### 1. Spring Boot 3.2.5 + Java 17
+
+| Decision | Rationale |
+|:---|:---|
+| **Stateless JWT Filters** | `JwtAuthFilter` intercepts every request in the security filter chain — no session storage, no cookie management |
+| **JSR-380 Bean Validation** | `@NotBlank`, `@Email`, `@Min`, `@Max` on DTOs validate at the controller boundary — invalid requests never reach service classes |
+| **Text Block Prompts** | Java 17 text blocks (`"""..."""`) keep multi-line AI prompts readable and maintainable in source code |
+
+### 2. PostgreSQL 15 + JSONB Hybrid Schema
+
+| Challenge | Solution |
+|:---|:---|
+| AI feedback structure is highly variable (dynamic arrays, nested objects) | Store structured user/session data with strict schemas; store AI feedback arrays in **JSONB** columns |
+| Standard normalization would require 5+ tables + complex joins | JSONB provides binary-compiled, indexable, deeply nested storage in a single column |
+| ORM serialization of JSONB | `io.hypersistence:hypersistence-utils-hibernate-62` auto-maps JSONB ↔ Java `List<Map>` |
+
+### 3. Flyway Migration Strategy
+
+```
+V1__create_users_table.sql      ──▶  Users + sport CHECK constraints
+V2__create_sessions_table.sql   ──▶  Sessions + JSONB columns + composite indexes
+V3__create_chat_messages_table.sql ──▶ Chat messages + session FK + timestamp index
+```
+
+> [!IMPORTANT]
+> Hibernate `ddl-auto` is set to `none`. All schema changes are version-controlled Flyway migration scripts. This guarantees identical schema state across local, staging, and production environments.
+
+### 4. Apache Tika — Magic Byte Verification
+
+| Threat | Defense |
+|:---|:---|
+| Attacker renames `malware.exe` → `photo.jpg` | Tika reads actual file stream headers (magic bytes) to confirm MIME type |
+| Only extensions are checked | We verify the byte signature matches `image/jpeg`, `image/png`, `image/webp`, or `image/gif` before persisting |
+
+### 5. WebClient over RestTemplate
+
+| RestTemplate (Legacy) | WebClient (Our Choice) |
+|:---|:---|
+| Blocking, one-thread-per-request | Non-blocking I/O via Netty reactor |
+| Thread pool exhaustion during slow AI calls | Server threads stay free during 3-8s Gemini latency |
+| Deprecated in Spring 6+ | Officially recommended for new projects |
+
+### 6. Retry + Fallback Strategy
+
+The `GeminiService` implements a 3-attempt retry loop with exponential backoff:
+
+```
+Attempt 1: Primary model (gemini-2.5-flash) · delay 1.5s on failure
+Attempt 2: Primary model (gemini-2.5-flash) · delay 3.0s on failure  
+Attempt 3: Fallback model (gemini-1.5-flash) · throws on failure
+```
+
+Handles `429` (rate limit), `503` (overloaded), and all `5xx` transient errors gracefully.
+
+---
+
+## 🔐 Security Architecture
+
+```mermaid
+graph LR
+    classDef green fill:#10b981,stroke:#047857,color:#fff
+    classDef blue fill:#3b82f6,stroke:#1d4ed8,color:#fff
+    classDef red fill:#ef4444,stroke:#b91c1c,color:#fff
+
+    A["Client Request"]:::blue --> B{"JwtAuthFilter"}:::green
+    B -->|Valid Token| C["SecurityContext<br/>Authenticated"]:::green
+    B -->|No Token| D["Public Endpoints<br/>/api/auth/**"]:::blue
+    B -->|Invalid Token| E["401 Unauthorized"]:::red
+    C --> F{"IDOR Check<br/>in Service Layer"}:::green
+    F -->|Owns Resource| G["Return Data"]:::green
+    F -->|Foreign Resource| H["403 Forbidden"]:::red
+```
+
+| Layer | Mechanism | Implementation |
+|:---|:---|:---|
+| **Password Storage** | BCrypt-12 (salted, adaptive hashing) | `SecurityConfig.passwordEncoder()` |
+| **Token Issuance** | HS512-signed JWT, 24h TTL | `JwtTokenProvider.generateToken()` |
+| **Request Auth** | Stateless filter chain, no sessions | `JwtAuthFilter.doFilterInternal()` |
+| **IDOR Protection** | Every service method verifies resource ownership | `SessionService`, `ChatService` |
+| **Input Validation** | JSR-380 annotations on all request DTOs | Controller boundary enforcement |
+| **File Upload Safety** | Apache Tika magic-byte inspection | `FileValidator.validateImage()` |
+| **Error Containment** | Global exception handler — no stack trace leaks | `GlobalExceptionHandler.java` |
+| **API Key Isolation** | `.env` only, excluded in `.gitignore` | Never committed to version control |
+
+---
+
+## 📡 API Endpoint Reference
+
+All endpoints are documented with interactive testing in [Swagger UI](http://localhost:8080/docs).
+
+### Authentication
+
+| Method | Endpoint | Auth | Description |
+|:---|:---|:---|:---|
+| `POST` | `/api/auth/register` | Public | Create athlete account with profile |
+| `POST` | `/api/auth/login` | Public | Authenticate and receive JWT |
+
+### Sessions
+
+| Method | Endpoint | Auth | Description |
+|:---|:---|:---|:---|
+| `POST` | `/api/sessions/upload` | 🔒 JWT | Upload stance photo → AI analysis |
+| `GET` | `/api/sessions` | 🔒 JWT | Paginated session history |
+| `GET` | `/api/sessions/{id}` | 🔒 JWT | Full session detail + feedback |
+| `GET` | `/api/sessions/compare?id1=...&id2=...` | 🔒 JWT | Side-by-side session comparison |
+
+### Chat
+
+| Method | Endpoint | Auth | Description |
+|:---|:---|:---|:---|
+| `POST` | `/api/sessions/{id}/chat` | 🔒 JWT | Send follow-up question to AI coach |
+| `GET` | `/api/sessions/{id}/chat` | 🔒 JWT | Retrieve conversation history |
+
+### System
+
+| Method | Endpoint | Auth | Description |
+|:---|:---|:---|:---|
+| `GET` | `/docs` | Public | Swagger UI — interactive API testing |
+| `GET` | `/uploads/{filename}` | Public | Serve uploaded images |
+
+---
+
+## 🗄️ Database Design
+
+### Entity Relationship Diagram
+
+```mermaid
+erDiagram
+    USERS {
+        bigint id PK
+        varchar full_name
+        varchar email UK
+        varchar password
+        varchar sport "CHECK: Cricket,Football,Basketball,Badminton"
+        varchar position_role
+        varchar experience_level "CHECK: BEGINNER,INTERMEDIATE,ADVANCED"
+        int age "CHECK: 13-60"
+        timestamp created_at
+    }
+
+    SESSIONS {
+        bigint id PK
+        bigint user_id FK
+        int overall_score "1-10"
+        jsonb strengths "String[]"
+        jsonb areas_to_improve "Map[]"
+        varchar priority_fix
+        varchar drill_suggestion
+        varchar confidence_level
+        jsonb body_annotations "Map[]"
+        varchar image_path
+        timestamp uploaded_at
+    }
+
+    CHAT_MESSAGES {
+        bigint id PK
+        bigint session_id FK
+        varchar role "USER | ASSISTANT"
+        text content
+        timestamp created_at
+    }
+
+    USERS ||--o{ SESSIONS : "has many"
+    SESSIONS ||--o{ CHAT_MESSAGES : "has many"
+```
+
+### Indexing Strategy
+
+| Index | Columns | Purpose |
+|:---|:---|:---|
+| `idx_sessions_user_uploaded` | `(user_id, uploaded_at DESC)` | Fast paginated dashboard queries |
+| `idx_chat_messages_session_created` | `(session_id, created_at ASC)` | Ordered chat history retrieval |
+| `users_email_key` | `(email)` UNIQUE | Login lookup + duplicate prevention |
 
 ---
 
 ## 🎨 UI/UX & Dynamic Empty States
 
-Visual comfort and state feedback are key elements of the Ghost Coach frontend:
+### Design Principles
 
-* **Empathetic Empty States**:
-  - **Dashboard Empty State**: When an athlete logs in for the first time, instead of displaying a blank page or a raw list wrapper, the dashboard renders a polished, visual card illustrating an empty locker room, encouraging them to perform their first technique review.
-  - **Chat Empty State**: The coach chat panel renders an interactive guiding state featuring a `Bot` icon and a brief list of prompt ideas (e.g. *Ask about correct elbow tucking*, *Get a specific routine for your drill*), helping athletes understand how to interact with their digital coach.
-* **Spacious Messaging Layout**: The chat bubbles use left alignment (`text-left`) for assistant messages, generous letter tracking (`tracking-wide`), standard sans-serif configurations, and clear vertical padding. Double-newlines split dense paragraphs into separate block elements natively.
+- **Glassmorphism aesthetic** with backdrop blur, gradient borders, and semi-transparent surfaces
+- **Tailwind CSS** responsive breakpoints at `375px` (mobile) → `1440px` (desktop)
+- **Lucide React** icon system for consistent, crisp iconography
+- **Recharts** gradient-filled area charts for progress analytics
+
+### Empathetic Empty States
+
+| State | Behavior |
+|:---|:---|
+| **First Login Dashboard** | Renders a polished visual card encouraging the first technique review — not a blank page |
+| **Empty Chat Panel** | Displays `Bot` icon with sample prompts (*"Ask about correct elbow tucking"*, *"Get a specific routine"*) |
+| **No Progress Data** | Shows motivational message with upload CTA instead of empty chart |
+
+### State Preservation
+
+A global `UploadContext` wrapper prevents React unmount from wiping active uploads, AI results, and preview state when navigating between tabs. Click away to Dashboard → return to Analyze → everything is intact.
 
 ---
 
 ## ⚠️ Known Limitations & Professional Mitigations
 
-If this were a production platform serving millions of active sessions, we would immediately address the following constraints:
-
-### 1. Synchronous HTTP Blocking
-* **Limitation**: Currently, when a user uploads an image, the Spring Boot container holds the HTTP connection open during the 3–8 second Gemini analysis. Under high traffic, this would quickly exhaust Tomcat's thread pool.
-* **Mitigation**: Decouple the analysis. Return a `202 Accepted` status with a unique session ID immediately. Delegate the analysis to an asynchronous worker thread pool managed by a message queue (like RabbitMQ or Redis). Notify the frontend via WebSockets or Server-Sent Events (SSE) when the session finishes parsing.
-
-### 2. Single-Angle Technique Review
-* **Limitation**: Athletic stance analysis is highly spatial. A single 2D image cannot capture rotational angles or balance issues.
-* **Mitigation**: Upgrade the API to accept multi-angle uploads (front, side, and rear) under a single session ID. Instruct Gemini to synthesize the photos into a single technique analysis.
-
-### 3. Local Filesystem Dependency
-* **Limitation**: Images are currently stored on the local Docker volume. This makes the container stateful, preventing horizontal scaling across multiple servers.
-* **Mitigation**: Integrate AWS S3 or Google Cloud Storage using the AWS S3 SDK. Spring's `FileStorageService` can easily be modified to stream bytes directly into a secure S3 bucket.
-
-### 4. localStorage Token Vulnerabilities
-* **Limitation**: JWTs are stored in the browser's `localStorage`, exposing the system to Cross-Site Scripting (XSS) token-theft attacks.
-* **Mitigation**: Migrate authentication to use secure, **HttpOnly, SameSite=Strict cookies**. This completely shields the token from malicious browser scripts.
+| # | Limitation | Impact | Production Mitigation |
+|:---|:---|:---|:---|
+| 1 | **Synchronous HTTP blocking** | 3-8s Gemini latency holds Tomcat threads | Return `202 Accepted` immediately; process via RabbitMQ/Redis worker; notify via SSE/WebSocket |
+| 2 | **Single-angle analysis** | 2D photo can't capture rotation or balance | Accept multi-angle uploads (front, side, rear) per session; synthesize in a single Gemini call |
+| 3 | **Local filesystem storage** | Stateful container, blocks horizontal scaling | Swap `FileStorageService` to stream into S3/GCS; serve via CDN |
+| 4 | **localStorage JWT** | Vulnerable to XSS token theft | Migrate to `HttpOnly`, `SameSite=Strict`, `Secure` cookies |
 
 ---
 
 ## 🔮 Future Product Roadmap
 
-Here is what we would build next to scale Ghost Coach into a market-disrupting fitness platform:
-
-* **Video Frame Analysis (FFmpeg)**: Allow athletes to upload 10-second clips. The backend will parse key-frames at dynamic intervals using FFmpeg, analyze stance coordinates across the motion sequence, and map technique progress.
-* **Canvas Interactive Overlays**: Map Gemini's observations to precise coordinate points (`[x, y]`) on the image. This will allow the React frontend to render responsive SVG lines, highlights, and pointers directly on top of the athlete's photo.
-* **Human-in-the-Loop Hybrid Coaching**: Add a coaching review portal. High-performance coaches can view AI drafts, modify technique feedback or drill suggestions, and sign off on reports before they go to the athlete.
-* **Dynamic Training Milestone Calendars**: Automatically generate 4-week training calendars inside the dashboard based on the AI's drill suggestions, complete with progress check-ins.
+| Feature | Technical Approach |
+|:---|:---|
+| 🎥 **Video Frame Analysis** | Accept 10-second clips → FFmpeg key-frame extraction → multi-frame Gemini analysis → motion sequence technique tracking |
+| 🎯 **Canvas Pose Overlays** | YOLOv8-Pose microservice extracts joint coordinates → React canvas renders SVG annotations pinned to the athlete's body |
+| 👨‍🏫 **Human-in-the-Loop Coaching** | Coach review portal: view AI drafts, modify feedback, sign off before delivery to athlete |
+| 📅 **Training Calendars** | Auto-generate 4-week drill calendars from AI suggestions with progress check-ins and milestone tracking |
+| 🔗 **OAuth2 + OIDC** | Google Fitness / Apple Health integration for profile sync and third-party data ingestion |
 
 ---
 
 ## 📝 Evaluation & Code Quality Signals
 
-Here are the specific signals to look for when reviewing our codebase:
-* **Zero N+1 Database Queries**: All session and chat queries in [SessionRepository.java](file:///d:/backend-prjct/src/main/java/com/playmotech/ghostcoach/repository/SessionRepository.java) leverage `JOIN FETCH` syntax to retrieve database records in a single round-trip.
-* **Insecure Direct Object Reference (IDOR) Protection**: Every service method checks session and message ownership, verifying that the authenticated user owns the resource before granting access.
-* **Secure Error Boundaries**: A comprehensive [GlobalExceptionHandler.java](file:///d:/backend-prjct/src/main/java/com/playmotech/ghostcoach/exception/GlobalExceptionHandler.java) intercepts all runtime, validation, database, and vision failures, logging them securely and returning clean, mapped error envelopes. No raw stack traces are ever exposed to the client.
-* **Git hygiene**: The codebase has been developed using structured, Conventional Commits styling (e.g. `feat:`, `fix:`, `refactor:`, `docs:`), ensuring that the repository history is atomic, clean, and easily auditable by senior engineering reviewers.
-* **Robust Test Coverage Principles**:
-  - Employs **MockMvc** (`@WebMvcTest`) to validate security configurations, token encodings, and REST controller DTO bounds without spinning up heavy network ports.
-  - Leverages **Mockito** to mock reactive `WebClient` payloads to Gemini, validating prompt construction and parser fail-safes under high volume.
-  - Ready for integration test suites utilizing **Testcontainers** to verify Flyway migrations against an active, localized PostgreSQL database container.
+| Signal | Evidence |
+|:---|:---|
+| **Zero N+1 Queries** | All repository methods use `JOIN FETCH` — verified in `SessionRepository.java` |
+| **IDOR Protection** | Every service method validates resource ownership against the authenticated user |
+| **Secure Error Boundaries** | `GlobalExceptionHandler.java` intercepts all exceptions — no stack traces leak to clients |
+| **Conventional Commits** | Structured `feat:`, `fix:`, `refactor:`, `docs:` commit messages throughout git history |
+| **DTO Boundary Validation** | JSR-380 annotations on all request DTOs — invalid data rejected before reaching services |
+| **Defensive AI Parsing** | `GeminiResponseParser` strips markdown fences, validates JSON structure before deserialization |
+| **Deterministic Schema** | Flyway migration scripts (no auto-ddl) — identical DB state across all environments |
+| **Non-blocking I/O** | WebClient (Netty) for all Gemini API calls — server threads stay free during AI latency |
+
+### Test Infrastructure
+
+| Category | Framework | Coverage |
+|:---|:---|:---|
+| **Controller Tests** | MockMvc (`@WebMvcTest`) | Security config, token encoding, DTO validation bounds |
+| **Service Unit Tests** | Mockito | WebClient response mocking, prompt construction, parser fail-safes |
+| **Integration Tests** | Testcontainers-ready | Flyway migration verification against real PostgreSQL container |
 
 ---
 
 ## ✨ Bonus Features Implemented & Honest Boundaries
 
-To provide the evaluators with complete technical transparency, here are the details of our bonus features:
+### 1. Body Annotations Legend
 
-1. **Body Annotations Legend (Not Pixel-Pinned)**:
-   - *Honest Scope*: The AI returns per-body-part technique feedback with importance levels. To ensure 100% architectural honesty, note that **pixel-pinned coordinate overlays are not implemented**. 
-   - *Why*: The Gemini 3.5 Flash Vision API operates as a multimodal generative model and does not natively return precise pixel coordinates `[x, y]` bounding box values for body joints.
-   - *Implementation*: Instead of overpromising with inaccurate overlay guessing, we implemented a highly readable **numbered legend panel** adjacent to the uploaded photo, listing body parts, detailed issues, and color-coded importance badges.
-   - *Staged Mitigation*: In a real production stage, we would place a lightweight pose estimation model (such as a local **YOLOv8-Pose** engine) inside a Python worker microservice to extract exact anatomical joints coordinates, then map Gemini's feedback onto those joint coordinates in the React canvas.
+- **What it does**: Renders a numbered legend panel adjacent to the uploaded photo, listing body parts, detailed issues, and color-coded importance badges (HIGH / MEDIUM / LOW)
+- **Honest scope**: Pixel-pinned coordinate overlays are **not** implemented. The Gemini 2.5 Flash Vision API does not natively return precise `[x, y]` bounding box values for body joints
+- **Production path**: Deploy a YOLOv8-Pose microservice to extract anatomical joint coordinates → map Gemini's feedback onto those coordinates in a React canvas
 
-2. **Mobile Responsive Layouts**: Full responsive design at 375px (mobile) and 1440px (desktop) using Tailwind responsive prefixes. Navigation collapses to icon-only on small screens.
+### 2. Mobile Responsive Layouts
 
-3. **Progress Analytics Chart**: Recharts `AreaChart` with gradient fill showing score over time. Includes custom tooltip, session history table with score deltas (↑/↓ indicators), and summary statistics (average, best, trend).
+Full responsive design from `375px` to `1440px` using Tailwind responsive prefixes. Navigation collapses to icon-only on small screens.
+
+### 3. Progress Analytics Chart
+
+Recharts `AreaChart` with gradient fill showing technique score over time. Includes:
+- Custom tooltip with session metadata
+- Session history table with score deltas (↑/↓ indicators)
+- Summary statistics: average score, personal best, trend direction
 
 ---
 
 <details>
-<summary>📂 Project Directory Layout</summary>
+<summary><strong>📂 Project Directory Layout</strong></summary>
 
 ```
 ghostcoach/
-├── docker-compose.yml
-├── Dockerfile
-├── .env.example
-├── pom.xml
+├── docker-compose.yml          # 3-service orchestration (API + DB + Frontend)
+├── Dockerfile                  # Multi-stage Java build (Maven → JRE Alpine)
+├── .env.example                # Environment template (never commit .env)
+├── pom.xml                     # Maven dependencies & Spring Boot parent
+│
 ├── src/main/java/com/playmotech/ghostcoach/
-│   ├── config/          # Security, CORS, JWT, Gemini, Web, OpenAPI configs
-│   ├── controller/      # Auth, Session, Chat, Docs REST controllers
-│   ├── service/         # Auth, Session, Chat, Gemini, FileStorage
-│   ├── repository/      # JPA repositories with optimized JOIN FETCH queries
+│   ├── GhostCoachApplication.java
+│   ├── config/                 # SecurityConfig, CorsConfig, GeminiConfig,
+│   │                           #   WebConfig, OpenApiConfig, JwtConfig
+│   ├── controller/             # AuthController, SessionController,
+│   │                           #   ChatController, DocsController
+│   ├── service/                # AuthService, SessionService, ChatService,
+│   │                           #   GeminiService, FileStorageService
+│   ├── repository/             # JPA repos with JOIN FETCH optimization
 │   ├── model/
-│   │   ├── entity/      # User, Session, ChatMessage JPA entities
-│   │   ├── dto/         # Clean request/response DTOs with validation
-│   │   └── enums/       # Sport, ExperienceLevel, ConfidenceLevel, Confidence
-│   ├── security/        # JWT provider, stateless auth filters, UserDetails
-│   ├── exception/       # Mapped custom exceptions + GlobalExceptionHandler
-│   └── util/            # GeminiResponseParser, Magic Byte FileValidator
+│   │   ├── entity/             # User, Session, ChatMessage (JPA entities)
+│   │   ├── dto/                # Request/Response DTOs with JSR-380 validation
+│   │   └── enums/              # Sport, ExperienceLevel, ConfidenceLevel
+│   ├── security/               # JwtTokenProvider, JwtAuthFilter, UserDetailsImpl
+│   ├── exception/              # Custom exceptions + GlobalExceptionHandler
+│   └── util/                   # GeminiResponseParser, FileValidator
+│
 ├── src/main/resources/
-│   ├── application.yml  # Base configurations & Swagger sort rules
-│   ├── application-dev.yml
-│   └── db/migration/    # Version-controlled Flyway SQL migrations
+│   ├── application.yml         # Base config (Swagger, JPA, multipart)
+│   ├── application-dev.yml     # Dev profile overrides
+│   └── db/migration/           # Flyway SQL migrations (V1, V2, V3)
+│
 └── frontend/
-    ├── Dockerfile       # Multi-stage production Nginx deployment
-    ├── nginx.conf       # SPA reverse routing proxy
+    ├── Dockerfile              # Multi-stage build (Node → Nginx Alpine)
+    ├── nginx.conf              # SPA routing + /api reverse proxy
+    ├── tailwind.config.js      # Custom theme extensions
     ├── src/
-    │   ├── components/  # Navbar, FeedbackCard, ChatWindow, Recharts ProgressChart
-    │   ├── pages/       # Login, Register, Dashboard, Upload, SessionDetail, Progress
-    │   ├── services/    # Secure Axios REST client
-    │   └── context/     # AuthContext JWT state managers
-    └── tailwind.config.js
+    │   ├── App.jsx             # Router + AuthContext wrapper
+    │   ├── pages/              # Login, Register, Dashboard, Upload,
+    │   │                       #   SessionDetail, Progress
+    │   ├── components/
+    │   │   ├── Common/         # Navbar, ProtectedRoute
+    │   │   ├── Session/        # FeedbackCard, CompareView
+    │   │   ├── Chat/           # ChatWindow, ChatBubble
+    │   │   └── Progress/       # ProgressChart, ScoreTable
+    │   ├── context/            # AuthContext, UploadContext
+    │   └── services/           # Axios API client with JWT interceptor
+    └── package.json            # React 18, Recharts, Lucide, Tailwind
 ```
+
 </details>
 
 ---
 
 ## 💡 What I Would Do Differently Given More Time
 
-While the current implementation meets the requirements of a high-quality interview submission, if given an extended timeline, I would adjust our approach in three key areas:
-
-1. **Adopt an Asynchronous-First Analysis Architecture**: Rather than retrofitting background workers onto our synchronous `/upload` endpoint, I would construct an event-driven core from the start. Using Spring Events or a lightweight queue, the upload would immediately save the raw file and return a `202 Accepted` event. This prevents long-running HTTP connections and simplifies vision processing scale-out.
-2. **Implement OAuth2 & OpenID Connect (OIDC)**: While standalone JWT with BCrypt-12 is highly secure, a real athletic platform thrives on external integrations (like Google Fitness or Apple Health). Building an OAuth2 configuration from day one would facilitate secure third-party profile synchronization.
-3. **Establish a Prompt Benchmark Suite**: Prompts are code. Instead of editing prompt strings manually inside the service classes, I would externalize them to version-controlled templates and establish an automated testing harness using fixed test images to evaluate output structure consistency (validating scores and JSON constraints) before deploying adjustments to production.
+| Area | Current State | What I'd Change |
+|:---|:---|:---|
+| **Analysis Architecture** | Synchronous `/upload` endpoint holds HTTP connection during AI processing | Build event-driven from day one — Spring Events or message queue, return `202 Accepted`, notify via SSE |
+| **Authentication** | Standalone JWT + BCrypt-12 | Implement OAuth2 + OIDC for external integrations (Google Fitness, Apple Health) |
+| **Prompt Management** | Prompt strings embedded in Java service classes | Externalize to version-controlled templates + build an automated benchmark suite using fixed test images to validate output structure consistency |
+| **Observability** | Application logging only | Add Micrometer + Prometheus metrics, OpenTelemetry distributed tracing, structured JSON logging |
+| **CI/CD** | Manual Docker builds | GitHub Actions pipeline: test → build → push to registry → deploy to staging |
 
 ---
 
-Built with ☕ and 👻 for the Playmotech Backend Engineer interview evaluation.
+<div align="center">
+
+Built with ☕ and 👻 for the Playmotech Backend Engineer evaluation.
+
+<br />
+
+**[📺 Watch Demo](https://www.loom.com/share/c51e1b8bd724439082667e03e258428d)** · **[📖 API Docs](http://localhost:8080/docs)** · **[🐳 Quick Start](#-quick-start-under-5-minutes)**
+
+</div>
+
