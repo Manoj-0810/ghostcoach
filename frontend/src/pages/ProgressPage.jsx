@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { getProgress } from '../services/api';
 import ProgressChart from '../components/Progress/ProgressChart';
 import LoadingSpinner from '../components/Common/LoadingSpinner';
-import { TrendingUp, Trophy, Target, Zap } from 'lucide-react';
+import { TrendingUp, Trophy, Target, Zap, GitCompare } from 'lucide-react';
 
 export default function ProgressPage() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [selectedSessions, setSelectedSessions] = useState([]);
 
   useEffect(() => {
     loadProgress();
@@ -16,6 +18,7 @@ export default function ProgressPage() {
   useEffect(() => {
     const handleSessionDeleted = (e) => {
       setData((prev) => prev.filter((s) => s.id !== e.detail.id));
+      setSelectedSessions((prev) => prev.filter((id) => id !== e.detail.id));
     };
     window.addEventListener('session-deleted', handleSessionDeleted);
     return () => window.removeEventListener('session-deleted', handleSessionDeleted);
@@ -49,7 +52,7 @@ export default function ProgressPage() {
           <TrendingUp className="w-8 h-8 text-ghost-400" />
           Progress Tracker
         </h1>
-        <p className="text-gray-500 mt-1">See how your technique has improved over time</p>
+        <p className="text-gray-500 mt-1">See how your technique has improved over time or select two sessions below to compare</p>
       </div>
 
       {loading ? (
@@ -118,13 +121,15 @@ export default function ProgressPage() {
           {/* Score breakdown table */}
           {data.length > 0 && (
             <div className="glass-card overflow-hidden">
-              <div className="p-4 border-b border-gray-800/50">
+              <div className="p-4 border-b border-gray-800/50 flex justify-between items-center">
                 <h3 className="font-display font-semibold text-white">Session History</h3>
+                <span className="text-xs text-gray-400">Select 2 sessions to compare</span>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-gray-800/50">
+                      <th className="text-left p-3 text-gray-500 font-medium w-16 text-center">Compare</th>
                       <th className="text-left p-3 text-gray-500 font-medium">#</th>
                       <th className="text-left p-3 text-gray-500 font-medium">Date</th>
                       <th className="text-left p-3 text-gray-500 font-medium">Score</th>
@@ -134,8 +139,27 @@ export default function ProgressPage() {
                   <tbody>
                     {data.map((item, i) => {
                       const change = i > 0 ? item.overallScore - data[i - 1].overallScore : 0;
+                      const isSelected = selectedSessions.includes(item.id);
                       return (
-                        <tr key={i} className="border-b border-gray-800/30 hover:bg-gray-800/20">
+                        <tr key={i} className={`border-b border-gray-800/30 hover:bg-gray-800/20 transition-colors ${isSelected ? 'bg-ghost-500/10' : ''}`}>
+                          <td className="p-3 text-center">
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  if (selectedSessions.length >= 2) {
+                                    setSelectedSessions([selectedSessions[1], item.id]);
+                                  } else {
+                                    setSelectedSessions([...selectedSessions, item.id]);
+                                  }
+                                } else {
+                                  setSelectedSessions(selectedSessions.filter(id => id !== item.id));
+                                }
+                              }}
+                              className="w-4 h-4 rounded bg-gray-900 border-gray-800 text-ghost-500 focus:ring-ghost-500 focus:ring-offset-gray-950 focus:ring-2 cursor-pointer"
+                            />
+                          </td>
                           <td className="p-3 text-gray-500">{i + 1}</td>
                           <td className="p-3 text-gray-300">
                             {new Date(item.sessionDate).toLocaleDateString('en-US', {
@@ -166,6 +190,24 @@ export default function ProgressPage() {
                     })}
                   </tbody>
                 </table>
+              </div>
+            </div>
+          )}
+
+          {/* Floating Action Banner */}
+          {selectedSessions.length === 2 && (
+            <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 animate-bounce">
+              <div className="glass-card shadow-2xl px-6 py-4 flex items-center gap-6 border border-ghost-500/30 bg-gray-950/90 backdrop-blur-md rounded-2xl">
+                <div className="text-left">
+                  <p className="text-sm font-semibold text-white">Compare Sessions Selected</p>
+                  <p className="text-xs text-gray-400">Ready to compare side-by-side progression</p>
+                </div>
+                <Link
+                  to={`/compare?id1=${selectedSessions[0]}&id2=${selectedSessions[1]}`}
+                  className="btn-primary flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold shadow-lg hover:scale-105 transition-all"
+                >
+                  <GitCompare className="w-4 h-4" /> Compare Stances
+                </Link>
               </div>
             </div>
           )}

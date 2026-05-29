@@ -98,11 +98,34 @@ export default function SessionDetailPage() {
                 <Image className="w-4 h-4 text-gray-400" />
                 <span className="text-sm font-medium text-gray-400">Uploaded Photo</span>
               </div>
-              <img
-                src={session.imageUrl}
-                alt="Session stance"
-                className="w-full rounded-xl object-contain max-h-[400px] bg-gray-800/50"
-              />
+              <div className="relative inline-block w-full overflow-hidden rounded-xl bg-gray-800/50">
+                <img
+                  src={session.imageUrl}
+                  alt="Session stance"
+                  className="w-full object-contain max-h-[400px] block"
+                />
+                {session.bodyAnnotations && session.bodyAnnotations.map((ann, i) => {
+                  const x = parseFloat(ann.x);
+                  const y = parseFloat(ann.y);
+                  if (isNaN(x) || isNaN(y) || x < 0 || x > 100 || y < 0 || y > 100) return null;
+
+                  const importanceColor =
+                    ann.importance === 'HIGH' ? 'bg-danger-500 border-danger-300' :
+                    ann.importance === 'MEDIUM' ? 'bg-warning-500 border-warning-300' :
+                    'bg-ghost-500 border-ghost-300';
+
+                  return (
+                    <div
+                      key={i}
+                      className={`absolute w-6 h-6 rounded-full ${importanceColor} border flex items-center justify-center text-[10px] font-bold text-white shadow-lg cursor-pointer hover:scale-125 transition-transform`}
+                      style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
+                      title={`${ann.label}: ${ann.description}`}
+                    >
+                      {i + 1}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
 

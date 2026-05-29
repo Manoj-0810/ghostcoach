@@ -8,6 +8,7 @@ import DashboardPage from './pages/DashboardPage';
 import UploadPage from './pages/UploadPage';
 import SessionDetailPage from './pages/SessionDetailPage';
 import ProgressPage from './pages/ProgressPage';
+import ComparePage from './pages/ComparePage';
 import LoadingSpinner from './components/Common/LoadingSpinner';
 
 function ProtectedRoute({ children }) {
@@ -31,6 +32,7 @@ function AppRoutes() {
       <Route path="/upload" element={<ProtectedRoute><Navbar /><UploadPage /></ProtectedRoute>} />
       <Route path="/sessions/:id" element={<ProtectedRoute><Navbar /><SessionDetailPage /></ProtectedRoute>} />
       <Route path="/progress" element={<ProtectedRoute><Navbar /><ProgressPage /></ProtectedRoute>} />
+      <Route path="/compare" element={<ProtectedRoute><Navbar /><ComparePage /></ProtectedRoute>} />
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

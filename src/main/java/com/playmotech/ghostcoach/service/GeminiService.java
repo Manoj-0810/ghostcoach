@@ -85,8 +85,8 @@ public class GeminiService {
                   "drillSuggestion": "<named drill + 1 sentence on how to perform it>",
                   "confidenceLevel": "<LOW|MEDIUM|HIGH>",
                   "bodyAnnotations": [
-                    {"label": "<body part>", "description": "<what to fix>", "importance": "<HIGH|MEDIUM|LOW>"},
-                    {"label": "<body part>", "description": "<what to fix>", "importance": "<HIGH|MEDIUM|LOW>"}
+                    {"label": "<body part>", "description": "<what to fix>", "importance": "<HIGH|MEDIUM|LOW>", "x": <integer 0-100 representing horizontal percent from left edge of image>, "y": <integer 0-100 representing vertical percent from top edge of image>},
+                    {"label": "<body part>", "description": "<what to fix>", "importance": "<HIGH|MEDIUM|LOW>", "x": <integer 0-100 representing horizontal percent from left edge of image>, "y": <integer 0-100 representing vertical percent from top edge of image>}
                   ]
                 }
                 

@@ -98,6 +98,8 @@ public class GeminiResponseParser {
                     annMap.put("label", ann.path("label").asText(""));
                     annMap.put("description", ann.path("description").asText(""));
                     annMap.put("importance", ann.path("importance").asText("MEDIUM"));
+                    annMap.put("x", ann.path("x").asText(""));
+                    annMap.put("y", ann.path("y").asText(""));
                     annotations.add(annMap);
                 }
             }
