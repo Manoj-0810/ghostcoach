@@ -79,9 +79,9 @@ graph TD
     D[Google AI Studio <br> Gemini 2.5 Flash API]:::external
 
     %% Relations
-    A <=>|HTTP REST API + JWT Authorization| B
-    B <=>|JDBC Driver + Flyway| C
-    B <=>|Non-blocking WebClient| D
+    A <-->|HTTP REST API + JWT Authorization| B
+    B <-->|JDBC Driver + Flyway| C
+    B <-->|Non-blocking WebClient| D
 ```
 
 ---
