@@ -1,0 +1,47 @@
+# ===== IDE & OS =====
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Java / Maven =====
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# ===== Environment =====
+.env
+*.env
+!.env.example
+
+# ===== Uploads =====
+uploads/
+!uploads/.gitkeep
+
+# ===== Node / Frontend =====
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# ===== Logs =====
+*.log
+logs/
+
+# ===== Docker =====
+docker-compose.override.yml
+
+# ===== Interview Deliverables & Reports =====
+compliance_audit_report.md
+loom_walkthrough_transcript.md
+node_modules/
+

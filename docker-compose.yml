@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: ghostcoach-db
+    environment:
+      POSTGRES_DB: ${DB_NAME:-ghostcoach}
+      POSTGRES_USER: ${DB_USER:-ghostcoach}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-ghostcoach_secret}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-ghostcoach} -d ${DB_NAME:-ghostcoach}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - ghostcoach-net
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ghostcoach-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME:-ghostcoach}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-ghostcoach}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-ghostcoach_secret}
+      JWT_SECRET: ${JWT_SECRET:-super-secret-jwt-key-that-is-at-least-32-characters-long}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-86400000}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.5-flash}
+      FILE_UPLOAD_DIR: /app/uploads
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+    ports:
+      - "8080:8080"
+    volumes:
+      - uploads:/app/uploads
+    networks:
+      - ghostcoach-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ghostcoach-ui
+    depends_on:
+      - app
+    ports:
+      - "3000:80"
+    networks:
+      - ghostcoach-net
+
+volumes:
+  pgdata:
+    driver: local
+  uploads:
+    driver: local
+
+networks:
+  ghostcoach-net:
+    driver: bridge
