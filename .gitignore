@@ -40,8 +40,6 @@ logs/
 # ===== Docker =====
 docker-compose.override.yml
 
-# ===== Interview Deliverables & Reports =====
-compliance_audit_report.md
-loom_walkthrough_transcript.md
+# modules
 node_modules/
 
