@@ -85,7 +85,7 @@ Deploy the entire full-stack application locally with a single command.
 
 ```bash
 # 1. Clone and enter the project
-git clone https://github.com/your-username/ghostcoach.git
+git clone https://github.com/Manoj-0810/ghostcoach
 cd ghostcoach
 
 # 2. Configure environment
