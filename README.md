@@ -21,15 +21,6 @@
   <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT" />
 </p>
 
-<br />
-
-<a href="https://www.loom.com/share/c51e1b8bd724439082667e03e258428d">
-  <img src="https://cdn.loom.com/sessions/thumbnails/c51e1b8bd724439082667e03e258428d-05dc14ac9f1b8027-full-play.gif" alt="Ghost Coach — Live Platform Demo" width="720" />
-</a>
-
-<p><strong>▶ Watch the full 5-minute platform walkthrough on Loom</strong></p>
-
-<br />
 
 </div>
 
